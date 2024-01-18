@@ -1,0 +1,25 @@
+version: '3'
+services:
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: porasdb
+      MYSQL_USER: root 
+      MYSQL_PASSWORD: root123
+    ports:
+      - "3306:3306"
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+  frontend:
+    build: ./fullstack
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
